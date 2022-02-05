@@ -110,10 +110,9 @@ pipeline {
             sh 'docker image prune -af'
         }
 
-
-        success('Destroy the infrastructure'){
+        success{
                 timeout(time:5, unit:'DAYS'){
-                    input message:'Destroy the Infrastructure?'
+                    input message:'Destroy the infrastructure?'
                 }
                 sh """
                 docker image prune -af
