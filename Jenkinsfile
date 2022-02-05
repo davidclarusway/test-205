@@ -10,7 +10,7 @@ pipeline {
         ECR_REGISTRY="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
         APP_REPO_NAME = "davids-repo/phonebook-app"
         APP_NAME = "phonebook"
-        CFN_KEYPAIR="davidskey"
+        //CFN_KEYPAIR="davidskey"
         HOME_FOLDER = "/home/ec2-user"
         GIT_FOLDER = sh(script:'echo ${GIT_URL} | sed "s/.*\\///;s/.git$//"', returnStdout:true).trim()
     }
