@@ -112,7 +112,6 @@ pipeline {
 
 
         success('Destroy the infrastructure'){
-            steps{
                 timeout(time:5, unit:'DAYS'){
                     input message:'Destroy the Infrastructure?'
                 }
@@ -124,7 +123,6 @@ pipeline {
                   --region ${AWS_REGION} \
                   --force
                 """
-            }
         }
 
         failure {
