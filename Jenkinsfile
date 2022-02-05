@@ -58,7 +58,7 @@ pipeline {
 
                     echo 'Leader manager is running'
 
-                    mid = sh(script: 'aws ec2 describe-instances --filters Name=tag-value,Values=dsvids-docker-manager-2 Name=instance-state-name,Values=running --query Reservations[*].Instances[*].[InstanceId] --output text',  returnStdout:true).trim()
+                    mid = sh(script: 'aws ec2 describe-instances --filters Name=tag-value,Values=davids-docker-manager-2 Name=instance-state-name,Values=running --query Reservations[*].Instances[*].[InstanceId] --output text',  returnStdout:true).trim()
                     sh 'aws ec2 wait instance-status-ok --instance-ids $mid'
                     
                     wid = sh(script: 'aws ec2 describe-instances --filters Name=tag-value,Values=davids-docker-worker-1 Name=instance-state-name,Values=running --query Reservations[*].Instances[*].[InstanceId] --output text',  returnStdout:true).trim()
