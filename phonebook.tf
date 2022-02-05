@@ -175,7 +175,7 @@ resource "aws_instance" "docker-machine-leader-manager" {
   user_data = data.template_file.leader-master.rendered
   tags = {
     Name = "davids-Docker-Swarm-Leader-Manager"
-    server = "docker-grand-master"
+    server = "davids-docker-grand-master"
     project = "205"
   }
 }
@@ -191,7 +191,7 @@ resource "aws_instance" "docker-machine-managers" {
   user_data = data.template_file.manager.rendered
   tags = {
     Name = "davids-Docker-Swarm-Manager-${count.index + 1}"
-    server = "docker-manager-${count.index + 2}"
+    server = "davids-docker-manager-${count.index + 2}"
     project = "205"
   }
   depends_on = [aws_instance.docker-machine-leader-manager]
@@ -208,7 +208,7 @@ resource "aws_instance" "docker-machine-workers" {
   user_data = data.template_file.worker.rendered
   tags = {
     Name = "davids-Docker-Swarm-Worker-${count.index + 1}"
-    server = "docker-worker-${count.index + 1}"
+    server = "davids-docker-worker-${count.index + 1}"
     project = "205"
   }
   depends_on = [aws_instance.docker-machine-leader-manager]
@@ -221,7 +221,7 @@ variable "sg-ports" {
 resource "aws_security_group" "tf-docker-sec-gr" {
   name = "davids-docker-swarm-sec-gr"
   tags = {
-    Name = "swarm-sec-gr"
+    Name = "davids-swarm-sec-gr"
   }
   dynamic "ingress" {
     for_each = var.sg-ports
