@@ -1,16 +1,13 @@
 //This terraform file deploys Phonebook Application to five Docker Machines on EC2 Instances  which are ready for Docker Swarm operations. Docker Machines will run on Amazon Linux 2  with custom security group allowing SSH (22), HTTP (80) UDP (4789, 7946),  and TCP(2377, 7946, 8080) connections from anywhere.
 //User needs to select appropriate key name when launching the template.
-/*
 terraform {
   required_providers {
     aws = {
-      source = "hashicorp/aws"
-      version = "3.60.0"
+      source  = "hashicorp/aws"
+      version = "~> 3.0"
     }
   }
 }
-*/
-
 
 provider "aws" {
   region = "us-east-1"
