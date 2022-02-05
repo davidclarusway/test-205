@@ -51,6 +51,9 @@ pipeline {
                     echo 'Waiting for Leader Manager'
 
                     id = sh(script: 'aws ec2 describe-instances --filters Name=tag-value,Values=davids-docker-grand-master Name=instance-state-name,Values=running --query Reservations[*].Instances[*].[InstanceId] --output text',  returnStdout:true).trim()
+
+                    echo '$id'
+
                     sh 'aws ec2 wait instance-status-ok --instance-ids $id'
 
                     echo 'Leader manager is running'
@@ -100,10 +103,18 @@ pipeline {
             }
         }
 
-        stage('Destroy the infrastructure'){
+    }
+    post {
+        always {
+            echo 'Deleting all local images'
+            sh 'docker image prune -af'
+        }
+
+
+        success('Destroy the infrastructure'){
             steps{
                 timeout(time:5, unit:'DAYS'){
-                    input message:'Approve terminate'
+                    input message:'Destroy the Infrastructure?'
                 }
                 sh """
                 docker image prune -af
@@ -116,12 +127,6 @@ pipeline {
             }
         }
 
-    }
-    post {
-        always {
-            echo 'Deleting all local images'
-            sh 'docker image prune -af'
-        }
         failure {
 
             echo 'Delete the Image Repository on ECR due to the Failure'
